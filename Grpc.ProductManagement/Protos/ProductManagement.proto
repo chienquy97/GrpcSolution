@@ -1,0 +1,13 @@
+﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "ProductManagement";
+
+service ProductManagement{
+	rpc ProductManagement(google.protobuf.Empty)
+	returns (stream ProductManagement);
+}
+
+message ProductManagement{
+	int32 Count = 1;
+}
