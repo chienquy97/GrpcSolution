@@ -18,13 +18,15 @@ namespace Grpc.AccountManagement.Services
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IRoleRepository _roleRepository;
+        private readonly IUserRoleRepository _userRoleRepo;
         private readonly AppDbContext _dbContext;
-        public RoleService(IUnitOfWork unitOfWork, AppDbContext dbContext, IRoleRepository roleRepository, IMapper mapper)
+        public RoleService(IUserRoleRepository userRoleRepo, IUnitOfWork unitOfWork, AppDbContext dbContext, IRoleRepository roleRepository, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _roleRepository = roleRepository;
             _dbContext = dbContext;
+            _userRoleRepo = userRoleRepo;
         }
         #region GET
         public List<AppRole> GetAll()
@@ -104,7 +106,7 @@ namespace Grpc.AccountManagement.Services
 
         public AppRole Update([FromBody] RoleModel app)
         {
-            var entity = _roleRepository.FindAll(x => x.Id == app.id).FirstOrDefault();
+            var entity = _roleRepository.FindAll(x => x.Id == app.Id).FirstOrDefault();
             entity.Name = app.RoleName;
             _roleRepository.Update(entity);
             SaveChanges();

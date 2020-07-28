@@ -24,9 +24,9 @@ namespace Grpc.AccountManagement.Services
             _dbContext = dbContext;
 
         }
-        public bool Add(Permission student)
+        public bool Add(Permission permission)
         {
-            _permissionRepository.Add(student);
+            _permissionRepository.Add(permission);
             SaveChanges();
             return true;
         }
@@ -56,7 +56,6 @@ namespace Grpc.AccountManagement.Services
         {
             var entity = _permissionRepository.FindAll(x => x.Id == vm.Id).FirstOrDefault();
             entity.PerName = vm.PerName;
-           
             _permissionRepository.Update(entity);
             SaveChanges();
             return entity;

@@ -19,10 +19,7 @@ namespace Grpc.AccountManagement.Context
         
         private readonly IPermissionService _permissionService;
         private IUnitOfWork _unitOfWork;
-        /*private readonly UserManager<Student> _userManager;*/
-       
         private readonly IPermissionRepository _permissionRepository;
-        //private IHomeRepository _ihomeRepo;
         private readonly AppDbContext _dbContext;
 
         public PermissionController(IPermissionService permissionServicee, IUnitOfWork unitOfWork,AppDbContext dbContext,IPermissionRepository permissionRepository)

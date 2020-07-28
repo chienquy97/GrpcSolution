@@ -62,7 +62,7 @@ namespace Grpc.AccountManagement.Services
         }
 
         
-        public async Task<IdentityResult> AddAsync(AppUserModel userVm)
+        public async Task<IdentityResult> AddAsync(AppUserlCreateViewMode userVm)
         {
             var user = new AppUser();
             user.FullName = userVm.FullName;
@@ -76,15 +76,16 @@ namespace Grpc.AccountManagement.Services
             var data = await _userManager.CreateAsync(user, userVm.PasswordHash);
             SaveChanges();
 
-            //if (data.Succeeded)
-            //{
-            //    user.Id = user.Id;
-            //    var entity = new UserRole();
-            //    entity.UserId = user.Id;
-            //    entity.RoleId = userVm.RoleId;
-            //    _iUserRoleRepo.Add(entity);
-            //    SaveChanges();
-            //}
+            if (!data.Succeeded)
+                return data;
+
+            var createdUser = await _userManager.FindByNameAsync(user.UserName);
+            foreach (var roleId in userVm.RoleIds)
+            {
+                _dbContext.UserRole.Add(new UserRole { UserId = createdUser.Id, RoleId = roleId });
+            }
+            SaveChanges();
+
             return data;
         }
         public List<AppUser> GetAll()
@@ -99,7 +100,7 @@ namespace Grpc.AccountManagement.Services
             return _mapper.Map<AppUser, AppUserModel>(user);
 
         }
-        public AppUser Update([FromBody] AppUserModel app)
+        public async Task<AppUser> Update([FromBody] AppUserModel app)
         {
             var entity = _appUserRepo.FindAll(x => x.Id == app.id).FirstOrDefault();
             entity.UserName = app.UserName;
@@ -109,14 +110,26 @@ namespace Grpc.AccountManagement.Services
             entity.PhoneNumber = app.PhoneNumber;
             entity.Avatar = app.Avatar;
             entity.DateCreated = DateTime.Now;
-            _appUserRepo.Update(entity);
+            //_appUserRepo.Update(entity);
+            await _userManager.UpdateAsync(entity);
+
+            //Delete previous roles
+            var rolesInDb = _dbContext.UserRole.Where(x => x.UserId == app.id);
+            _dbContext.UserRole.RemoveRange(rolesInDb);
+
+            //Update new roles
+            foreach (var roleId in app.RoleIds)
+            {
+                _dbContext.UserRole.Add(new UserRole { UserId = (Guid)app.id, RoleId = roleId });
+            }
+
             SaveChanges();
             return entity;
         }
 
         public void Delete(int id)
         {
-            //_roleRepository.Remove(id);
+           // _appUserRepo.Remove(id);
             SaveChanges();
         }
         private void SaveChanges()

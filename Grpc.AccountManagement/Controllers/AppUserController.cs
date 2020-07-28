@@ -104,7 +104,7 @@ namespace Grpc.AccountManagement.Controller
         [HttpPost]
         [Route("Add")]
         //[AppAuthorize(PermissionTypes.Any, PermissionRule.update_user)]
-        public async Task<IActionResult> Add([FromBody] AppUserModel Vm)
+        public async Task<IActionResult> Add([FromBody] AppUserlCreateViewMode Vm)
         {
             if (!ModelState.IsValid)
             {
@@ -164,7 +164,7 @@ namespace Grpc.AccountManagement.Controller
         [HttpPut]
         [Route("Update")]
         // [AppAuthorize(PermissionTypes.Any, PermissionRule.update_news)]
-        public IActionResult Update([FromBody] AppUserModel appUser)
+        public async Task<IActionResult> Update([FromBody] AppUserModel appUser)
         {
             if (!ModelState.IsValid)
             {
@@ -175,7 +175,7 @@ namespace Grpc.AccountManagement.Controller
             {
                 try
                 {
-                    _appUserService.Update(appUser);
+                    await _appUserService.Update(appUser);
 
                     return new OkObjectResult(new GenericResult(true, "Update success!!!"));
                 }
@@ -204,5 +204,15 @@ namespace Grpc.AccountManagement.Controller
             }
 
         }
+
+        //public bool CheckUser(string token, string[] permissions)
+        //{
+        //    // Phân tích token => userId => roles => permission
+        //    // Check permission truyền vào, nếu tồn tại trong permission trong db => true
+        //    return true;
+
+        //    // Nếu sai
+        //    return false;
+        //}
     }
 }

@@ -158,7 +158,7 @@ namespace Grpc.ProductManagement.Controller
         [HttpPut]
         [Route("Update")]
         // [AppAuthorize(PermissionTypes.Any, PermissionRule.update_news)]
-        public IActionResult Update([FromBody] RoleModel roleModel)
+        public async Task<IActionResult> Update([FromBody] RoleModel roleModel)
         {
             if (!ModelState.IsValid)
             {

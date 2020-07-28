@@ -9,9 +9,15 @@ namespace Grpc.AccountManagement.ViewModels
     public class PermissionModel : DomainEntity<int>
     {
         public string PerName { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
+        public int DeleteFlag { get; set; }
     }
     public class PermissionCreateViewModel
     {
         public string PerName { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
+        public int DeleteFlag { get; set; }
     }
 }

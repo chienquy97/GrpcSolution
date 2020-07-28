@@ -51,6 +51,23 @@ namespace Grpc.AccountManagement
                       });
             });
             #endregion
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                // User settings
+                // options.User.RequireUniqueEmail = true;
+            });
             //services.AddCors(options => {
             //    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
             //});
@@ -92,16 +109,17 @@ namespace Grpc.AccountManagement
             services.AddTransient<IPermissionService, PermissionService>();
             services.AddTransient<IAppUserService, AppUserService>();
             services.AddTransient<IRoleService, RoleService>();
+            //services.AddTransient<IUserRoleService, UserRoleService>();
+            services.AddTransient<IRolePermissionService, RolePermissionService>();
             #endregion Service
 
 
             #region Repository
             services.AddTransient<IAppUserRepository, AppUserRepository>();
-
-
-            services.AddTransient<IRolePerRepository, RolePerRepository>();
+            services.AddTransient<IRolePermissionRepository, RolerPermissionRepository>();
 
             services.AddTransient<IRoleRepository, RoleRepository>();
+            services.AddTransient<IUserRoleRepository, UserRoleRepository>();
 
             services.AddTransient<IPermissionRepository, PermissionRepository>();
             #endregion Repository

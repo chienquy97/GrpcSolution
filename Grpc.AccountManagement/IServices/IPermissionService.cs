@@ -10,7 +10,7 @@ namespace Grpc.AccountManagement.IServices
 {
     public interface IPermissionService
     {
-        bool Add(Permission student);
+        bool Add(Permission permission);
         Task<Permission> GetPermissionAsync();
         Permission Update([FromBody] PermissionModel permission);
         void Delete(int id);

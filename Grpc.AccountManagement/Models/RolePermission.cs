@@ -11,6 +11,6 @@ namespace Grpc.AccountManagement.Models
     public class RolePermission : DomainEntity<int>
     {
         public Guid RoleId { get; set; }
-        public int PerId { get; set; }
+        public int PerId { get; set; }         
     }
 }

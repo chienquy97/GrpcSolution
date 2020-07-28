@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Grpc.AccountManagement.ViewModels
 {
-    public class RoleModel : DomainEntity<int>
+    public class RoleModel
     {
-        public Guid id { get; set; }
-        public string RoleName { get; set; }      
+        public Guid Id { get; set; }
+        public string RoleName { get; set; }
+        public int[] PerIds { get; set; }
     }
     public class RoleCreateViewModel
     {
         public string RoleName { get; set; }
+        public int[] PerIds { get; set; }
     }
 }

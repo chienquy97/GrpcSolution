@@ -37,10 +37,18 @@ namespace Grpc.ProductManagement.Authorization
 
             public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
             {
-                var accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+                var accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString();
                 var permission = RequiredPermissions;
+
+                // Gọi grpc đến account để check
+
+                //AccountServer server = new AccountServer();
+                //server.Start();
+
                 if (string.IsNullOrEmpty(accessToken))
                 {
+                //Nếu trả về false
+                    context.Result = new ChallengeResult();
                     return;
                 }
                 //var authenticateInfo = await HttpContext.Authentication.GetAuthenticateInfoAsync("Bearer");

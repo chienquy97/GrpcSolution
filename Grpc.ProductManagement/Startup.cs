@@ -16,10 +16,6 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
-using Grpc.ProductManagement.IRepositories;
-using Grpc.ProductManagement.IServices;
-using Grpc.ProductManagement.Services;
-using Grpc.ProductManagement.Repositories;
 
 namespace Grpc.ProductManagement
 {
@@ -35,12 +31,7 @@ namespace Grpc.ProductManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddCors(options => {
-                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
-            });
             services.AddControllers();
-            
 
             services.AddSwaggerGen(c =>
             {
@@ -71,19 +62,8 @@ namespace Grpc.ProductManagement
                         ValidateAudience = false
                     };
                 });
-              
-            /*  services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
-              services.AddTransient(typeof(IRepository<,>), typeof(EFRepository<,>));
 
-
-              services.AddTransient<IPermissionRepository, PermissionRepository>();
-              services.AddTransient<IRoleRepository, RoleRepository>();
-
-
-              
-              services.AddTransient<IRoleService, RoleService>();
-              services.AddTransient<IPermissionService, PermissionService>();
-              services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();*/
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,7 +74,7 @@ namespace Grpc.ProductManagement
                 app.UseDeveloperExceptionPage();
             }
 
-            
+            app.UseCors("AllowAllHeaders");
 
             // Config Swagger
             app.UseSwagger();
@@ -113,6 +93,7 @@ namespace Grpc.ProductManagement
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

@@ -14,8 +14,8 @@ namespace Grpc.AccountManagement.IServices
         List<AppUser> GetAll();
         AppUserModel GetByIdd(Guid id);
         Task<object> GetById(Guid id);
-        Task<IdentityResult> AddAsync(AppUserModel userVm);
+        Task<IdentityResult> AddAsync(AppUserlCreateViewMode userVm);
         void Delete(int id);
-        AppUser Update([FromBody] AppUserModel app);
+        Task<AppUser> Update([FromBody] AppUserModel app);
     }
 }

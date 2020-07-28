@@ -25,7 +25,7 @@ namespace Grpc.AccountManagement
         }
         public void AddRange(List<T> entity)
         {
-            _context.Add(entity);
+            _context.AddRange(entity);
         }
 
         public void Dispose()

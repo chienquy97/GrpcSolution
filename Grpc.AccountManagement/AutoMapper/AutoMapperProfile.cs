@@ -21,7 +21,12 @@ namespace Grpc.AccountManagement.AutoMapper
             CreateMap<AppUser, AppUserlCreateViewMode>().ReverseMap();
             CreateMap<AppUserModel, AppUser>().ReverseMap();
             CreateMap<AppUser, AppUserModel>().ReverseMap();
-
+            CreateMap<Permission, PermissionModel>().ReverseMap();
+            CreateMap<PermissionModel, Permission>().ReverseMap();
+            CreateMap<UserRole, UserRoleViewModel>().ReverseMap();
+            CreateMap<UserRoleViewModel, UserRole>().ReverseMap();
+            //CreateMap<RolePerViewModel, RolePermission>().ReverseMap();
+            //CreateMap<RolePermission, RolePerViewModel>().ReverseMap();
         }
     }
 }

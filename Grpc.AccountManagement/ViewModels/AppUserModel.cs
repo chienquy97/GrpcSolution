@@ -14,6 +14,7 @@ namespace Grpc.AccountManagement.ViewModels
         public string PasswordHash { get; set; }
         public string UserName { get; set; }
         public string Avatar { get; set; }
+        public Guid[] RoleIds { get; set; }
         public int DeleteFlag { get; set; }
     }
     public class AppUserlCreateViewMode
@@ -22,9 +23,9 @@ namespace Grpc.AccountManagement.ViewModels
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string UserName { get; set; }
-        public DateTime BirthDay { set; get; }
         public string Avatar { get; set; }
         public string PasswordHash { get; set; }
+        public Guid[] RoleIds { get; set; }
         public int DeleteFlag { get; set; }
     }
 }
